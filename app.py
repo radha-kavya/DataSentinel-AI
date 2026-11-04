@@ -1,4 +1,4 @@
-```python
+
 import streamlit as st
 import pandas as pd
 import requests
@@ -699,4 +699,3 @@ st.markdown("""
     Powered by Multi-Agent Artificial Intelligence
 </div>
 """, unsafe_allow_html=True)
-```
