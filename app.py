@@ -1,12 +1,12 @@
-
+```python
 import streamlit as st
 import pandas as pd
 import requests
 import os
 
-# ==========================================
+# =====================================================
 # 1. PAGE CONFIGURATION
-# ==========================================
+# =====================================================
 
 st.set_page_config(
     page_title="DataSentinel AI",
@@ -15,94 +15,214 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# ==========================================
-# 2. CUSTOM CSS
-# ==========================================
+# =====================================================
+# 2. CUSTOM CSS - PROFESSIONAL LIGHT THEME
+# =====================================================
 
 st.markdown("""
 <style>
 
+/* Main background */
 .stApp {
-    background: linear-gradient(135deg, #F4F7FF, #F9F5FF);
+    background-color: #F3F6FC;
 }
 
+/* Main text */
+.stApp,
+.stApp p,
+.stApp label,
+.stApp li,
+.stApp span {
+    color: #172554;
+}
+
+/* Main headings */
+h1, h2, h3, h4 {
+    color: #172554 !important;
+    font-weight: 750 !important;
+}
+
+/* Main title */
+.main-title {
+    color: #243B85 !important;
+    font-size: 42px;
+    font-weight: 850;
+    margin-bottom: 5px;
+}
+
+/* Subtitle */
+.subtitle {
+    color: #475569 !important;
+    font-size: 17px;
+    margin-bottom: 20px;
+}
+
+/* Sidebar */
 [data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #172554, #312E81);
+    background-color: #172554 !important;
 }
 
 [data-testid="stSidebar"] * {
-    color: white !important;
+    color: #FFFFFF !important;
 }
 
-.main-title {
-    font-size: 42px;
-    font-weight: 800;
-    background: linear-gradient(90deg, #2563EB, #9333EA, #0891B2);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p {
+    color: #FFFFFF !important;
 }
 
-.subtitle {
-    color: #64748B;
-    font-size: 17px;
+/* Metric cards */
+[data-testid="stMetric"] {
+    background-color: #FFFFFF !important;
+    border: 1px solid #D5DFF0;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 3px 10px rgba(30, 50, 100, 0.07);
 }
 
-.metric-card {
-    background: white;
-    padding: 22px;
-    border-radius: 16px;
-    border: 1px solid #E2E8F0;
-    box-shadow: 0px 4px 15px rgba(50, 60, 120, 0.08);
+[data-testid="stMetricLabel"],
+[data-testid="stMetricLabel"] p {
+    color: #475569 !important;
 }
 
-.section-card {
-    background: white;
-    padding: 22px;
-    border-radius: 16px;
-    border: 1px solid #E2E8F0;
-    margin-bottom: 15px;
+[data-testid="stMetricValue"] {
+    color: #2457C5 !important;
 }
 
+/* Buttons */
 .stButton > button {
-    background: linear-gradient(90deg, #2563EB, #7C3AED);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-weight: bold;
-    min-height: 48px;
+    background-color: #4F46E5 !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    border-radius: 10px !important;
+    font-weight: 700 !important;
+    min-height: 46px;
+}
+
+.stButton > button p {
+    color: #FFFFFF !important;
 }
 
 .stButton > button:hover {
-    background: linear-gradient(90deg, #1D4ED8, #6D28D9);
-    color: white;
-    border: none;
+    background-color: #3730A3 !important;
+    color: #FFFFFF !important;
 }
 
+/* Download button */
 .stDownloadButton > button {
-    background: linear-gradient(90deg, #059669, #0D9488);
-    color: white;
-    border: none;
-    border-radius: 10px;
+    background-color: #047857 !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    border-radius: 10px !important;
     min-height: 45px;
 }
 
-div[data-testid="stFileUploader"] {
-    background: white;
-    padding: 15px;
-    border-radius: 15px;
-    border: 1px dashed #818CF8;
+.stDownloadButton > button p {
+    color: #FFFFFF !important;
 }
 
-h1, h2, h3 {
-    color: #172554;
+/* Text inputs */
+.stTextInput label {
+    color: #172554 !important;
+    font-weight: 650 !important;
+}
+
+.stTextInput input {
+    background-color: #FFFFFF !important;
+    color: #172554 !important;
+    border: 1px solid #A5B4FC !important;
+    border-radius: 9px !important;
+}
+
+.stTextInput input::placeholder {
+    color: #64748B !important;
+    opacity: 1;
+}
+
+/* File uploader */
+[data-testid="stFileUploader"] {
+    background-color: #FFFFFF !important;
+    border: 2px dashed #818CF8 !important;
+    border-radius: 14px !important;
+    padding: 18px;
+}
+
+[data-testid="stFileUploader"] * {
+    color: #172554 !important;
+}
+
+/* Tabs */
+.stTabs [data-baseweb="tab"] {
+    color: #334155 !important;
+    font-weight: 650 !important;
+}
+
+.stTabs [aria-selected="true"] {
+    color: #4338CA !important;
+}
+
+/* Expanders */
+[data-testid="stExpander"] {
+    background-color: #FFFFFF !important;
+    border: 1px solid #D9E3F5 !important;
+    border-radius: 12px !important;
+}
+
+[data-testid="stExpander"] summary,
+[data-testid="stExpander"] summary p {
+    color: #172554 !important;
+    font-weight: 650 !important;
+}
+
+/* Alerts */
+[data-testid="stAlert"] p {
+    color: #172554 !important;
+}
+
+/* Report text */
+[data-testid="stMarkdownContainer"] p,
+[data-testid="stMarkdownContainer"] li {
+    color: #263449 !important;
+    line-height: 1.7;
+}
+
+[data-testid="stMarkdownContainer"] strong {
+    color: #172554 !important;
+}
+
+/* Dataframe container */
+[data-testid="stDataFrame"] {
+    background-color: #FFFFFF !important;
+    border-radius: 12px;
+}
+
+/* Section cards */
+.section-card {
+    background-color: #FFFFFF;
+    padding: 22px;
+    border: 1px solid #D9E3F5;
+    border-radius: 14px;
+    margin-bottom: 15px;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    color: #475569 !important;
+    font-size: 14px;
+}
+
+/* Dividers */
+hr {
+    border-color: #CBD5E1 !important;
 }
 
 </style>
 """, unsafe_allow_html=True)
 
-# ==========================================
-# 3. N8N CONFIGURATION
-# ==========================================
+
+# =====================================================
+# 3. N8N WEBHOOK CONFIGURATION
+# =====================================================
 
 try:
     N8N_WEBHOOK_URL = st.secrets.get(
@@ -113,9 +233,21 @@ except Exception:
         "N8N_WEBHOOK_URL", ""
     )
 
-# ==========================================
-# 4. SIDEBAR
-# ==========================================
+
+# =====================================================
+# 4. SESSION STATE
+# =====================================================
+
+if "report" not in st.session_state:
+    st.session_state.report = ""
+
+if "report_file_name" not in st.session_state:
+    st.session_state.report_file_name = ""
+
+
+# =====================================================
+# 5. SIDEBAR
+# =====================================================
 
 with st.sidebar:
 
@@ -135,27 +267,27 @@ with st.sidebar:
 
     st.markdown("---")
 
-    st.markdown("### 🤖 AI Agents")
+    st.subheader("🤖 AI Specialist Agents")
 
     st.markdown("""
-    🔹 Data Quality Auditor
+    🔍 Data Quality Auditor
 
-    🔹 ML Risk Analyst
+    ⚠️ ML Risk Analyst
 
-    🔹 ML Strategy Advisor
+    🧠 ML Strategy Advisor
 
-    🔹 Final Report Generator
+    📊 Final Report Generator
     """)
 
     st.markdown("---")
 
-    st.caption("Multi-Agent AI System")
+    st.caption("Powered by Multi-Agent AI")
+    st.caption("Streamlit + n8n + Gemini")
 
-    st.caption("Developed with Streamlit + n8n")
 
-# ==========================================
-# 5. MAIN HEADER
-# ==========================================
+# =====================================================
+# 6. MAIN HEADER
+# =====================================================
 
 st.markdown(
     '<div class="main-title">🛡️ DataSentinel AI</div>',
@@ -169,11 +301,12 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.write("")
+st.divider()
 
-# ==========================================
-# 6. ABOUT PAGE
-# ==========================================
+
+# =====================================================
+# 7. ABOUT PROJECT PAGE
+# =====================================================
 
 if page == "About Project":
 
@@ -181,97 +314,125 @@ if page == "About Project":
 
     st.markdown("""
     <div class="section-card">
-    <h3>Intelligent Dataset Analysis</h3>
-    DataSentinel AI is a multi-agent AI application
-    that evaluates CSV datasets and generates
-    machine learning readiness recommendations.
+        <h3>Intelligent Dataset Analysis</h3>
+        <p>
+        DataSentinel AI is a multi-agent artificial intelligence
+        application that analyzes CSV datasets, identifies data
+        quality problems, evaluates machine learning risks and
+        provides preprocessing recommendations.
+        </p>
     </div>
     """, unsafe_allow_html=True)
 
-    st.subheader("Our AI Agents")
+    st.subheader("Our Specialist Agents")
 
-    agents = [
-        ("🔍 Data Quality Auditor",
-         "Identifies missing values, duplicates and data types."),
-        ("⚠️ ML Risk Analyst",
-         "Evaluates target variables, data risks and possible leakage."),
-        ("🧠 ML Strategy Advisor",
-         "Suggests preprocessing and suitable ML models."),
-        ("📊 Final Report Generator",
-         "Creates a comprehensive dataset analysis report.")
-    ]
+    with st.expander("🔍 Agent 1 - Data Quality Auditor"):
+        st.write("""
+        Identifies missing values, duplicate records,
+        incorrect data types and data quality problems.
+        """)
 
-    for name, description in agents:
-        with st.expander(name):
-            st.write(description)
+    with st.expander("⚠️ Agent 2 - ML Risk Analyst"):
+        st.write("""
+        Evaluates target variables, possible data leakage,
+        class imbalance when counts are available and
+        potential fairness concerns.
+        """)
+
+    with st.expander("🧠 Agent 3 - ML Strategy Advisor"):
+        st.write("""
+        Recommends data cleaning, imputation, encoding,
+        scaling, suitable machine learning algorithms
+        and evaluation metrics.
+        """)
+
+    with st.expander("📊 Agent 4 - Final Report Generator"):
+        st.write("""
+        Combines the findings from all specialist agents
+        into a structured dataset analysis report.
+        """)
 
     st.subheader("Technology Stack")
 
-    st.write(
-        "Python | Streamlit | n8n | Google Gemini | "
-        "Pandas | Multi-Agent AI"
-    )
+    st.write("""
+    Python | Pandas | Streamlit | n8n |
+    Google Gemini | Multi-Agent AI
+    """)
 
-# ==========================================
-# 7. DATASET ANALYZER PAGE
-# ==========================================
+
+# =====================================================
+# 8. DATASET ANALYZER PAGE
+# =====================================================
 
 else:
 
-    st.header("📂 Dataset Upload")
+    st.header("📂 Upload Your Dataset")
 
     st.write(
-        "Upload any CSV dataset to explore its structure "
-        "and generate an AI-powered analysis."
+        "Upload your CSV file to explore your dataset "
+        "and perform AI-powered analysis."
     )
 
     uploaded_file = st.file_uploader(
         "Choose your CSV dataset",
         type=["csv"],
-        help="Upload a CSV file containing your dataset."
+        help="Upload a CSV file for dataset analysis."
     )
 
     target_column = st.text_input(
-        "🎯 Target Column (Optional)",
+        "🎯 Target Column Name (Optional)",
         placeholder="Example: churn"
     )
 
     df = None
 
-    # ======================================
-    # 8. DATASET PREVIEW
-    # ======================================
+    # =================================================
+    # 9. READ CSV
+    # =================================================
 
     if uploaded_file is not None:
 
         try:
+
             df = pd.read_csv(uploaded_file)
 
             if df.empty:
-                st.error("The uploaded CSV is empty.")
+                st.error("The uploaded CSV contains no records.")
                 df = None
 
             elif len(df.columns) == 0:
-                st.error("No columns found in the CSV.")
+                st.error("No columns were found in the CSV.")
                 df = None
 
             else:
                 st.success("✅ Dataset uploaded successfully!")
 
         except Exception as e:
-            st.error(f"CSV reading error: {e}")
+
+            st.error(f"Unable to read CSV: {e}")
+            df = None
+
+    # =================================================
+    # 10. DATASET OVERVIEW
+    # =================================================
 
     if df is not None:
 
-        st.markdown("---")
+        st.divider()
 
         st.header("📊 Dataset Overview")
 
         col1, col2, col3, col4 = st.columns(4)
 
-        col1.metric("Total Rows", f"{df.shape[0]:,}")
+        col1.metric(
+            "Total Rows",
+            f"{df.shape[0]:,}"
+        )
 
-        col2.metric("Total Columns", f"{df.shape[1]:,}")
+        col2.metric(
+            "Total Columns",
+            f"{df.shape[1]:,}"
+        )
 
         col3.metric(
             "Missing Values",
@@ -283,19 +444,22 @@ else:
             f"{int(df.duplicated().sum()):,}"
         )
 
-        # ==================================
-        # 9. INTERACTIVE TABS
-        # ==================================
+        # =============================================
+        # 11. INTERACTIVE TABS
+        # =============================================
 
-        tab1, tab2, tab3 = st.tabs([
+        st.subheader("🔎 Explore Your Dataset")
+
+        tab1, tab2, tab3, tab4 = st.tabs([
             "📋 Data Preview",
             "📈 Missing Values",
-            "🔎 Column Information"
+            "🔍 Column Details",
+            "📊 Data Statistics"
         ])
 
         with tab1:
 
-            st.subheader("Dataset Preview")
+            st.subheader("Dataset Records")
 
             st.dataframe(
                 df.head(20),
@@ -308,10 +472,9 @@ else:
             st.subheader("Missing Values Analysis")
 
             missing = df.isnull().sum()
-
             missing = missing[missing > 0]
 
-            if len(missing) > 0:
+            if not missing.empty:
 
                 st.bar_chart(
                     missing,
@@ -324,6 +487,7 @@ else:
                 )
 
             else:
+
                 st.success("🎉 No missing values found!")
 
         with tab3:
@@ -344,34 +508,58 @@ else:
                 use_container_width=True
             )
 
-        # ==================================
-        # 10. TARGET COLUMN VALIDATION
-        # ==================================
+        with tab4:
+
+            st.subheader("Numerical Data Statistics")
+
+            numeric_df = df.select_dtypes(
+                include="number"
+            )
+
+            if not numeric_df.empty:
+
+                st.dataframe(
+                    numeric_df.describe().round(2),
+                    use_container_width=True
+                )
+
+            else:
+
+                st.info(
+                    "No numerical columns are available "
+                    "for statistical analysis."
+                )
+
+        # =============================================
+        # 12. TARGET COLUMN
+        # =============================================
 
         if target_column.strip():
 
             if target_column not in df.columns:
+
                 st.warning(
                     f"Target column '{target_column}' "
-                    "was not found in the dataset."
+                    "does not exist in this dataset."
                 )
 
             else:
-                st.info(
-                    f"🎯 Selected target column: {target_column}"
+
+                st.success(
+                    f"🎯 Target column selected: {target_column}"
                 )
 
-        # ==================================
-        # 11. AI ANALYSIS
-        # ==================================
+        # =============================================
+        # 13. AI ANALYSIS
+        # =============================================
 
-        st.markdown("---")
+        st.divider()
 
         st.header("🤖 AI-Powered Dataset Analysis")
 
         st.write(
-            "Our four specialist agents will analyze "
-            "your dataset and prepare a report."
+            "Four specialist AI agents will analyze "
+            "your dataset and prepare a detailed report."
         )
 
         if st.button(
@@ -381,19 +569,26 @@ else:
 
             if df is None:
 
-                st.warning("Please upload a valid CSV first.")
+                st.warning("Please upload a valid CSV file.")
 
             elif not N8N_WEBHOOK_URL:
 
                 st.error(
-                    "n8n Webhook URL is not configured yet. "
-                    "We will connect it during deployment."
+                    "n8n Webhook URL is not configured. "
+                    "We need to connect your n8n workflow first."
+                )
+
+            elif target_column.strip() and target_column not in df.columns:
+
+                st.error(
+                    "Please enter a valid target column name "
+                    "or leave it empty."
                 )
 
             else:
 
                 with st.spinner(
-                    "🤖 DataSentinel AI agents are working..."
+                    "🤖 AI agents are analyzing your dataset..."
                 ):
 
                     try:
@@ -427,7 +622,11 @@ else:
 
                         if report:
 
-                            st.session_state["report"] = report
+                            st.session_state.report = report
+
+                            st.session_state.report_file_name = (
+                                uploaded_file.name
+                            )
 
                             st.success(
                                 "🎉 Dataset analysis completed!"
@@ -436,7 +635,7 @@ else:
                         else:
 
                             st.error(
-                                "No report received from n8n."
+                                "No report was received from n8n."
                             )
 
                             st.json(result)
@@ -450,7 +649,7 @@ else:
                     except requests.exceptions.RequestException as e:
 
                         st.error(
-                            f"Connection error: {e}"
+                            f"Unable to connect to n8n: {e}"
                         )
 
                     except Exception as e:
@@ -459,41 +658,45 @@ else:
                             f"Unexpected error: {e}"
                         )
 
-        # ==================================
-        # 12. DISPLAY REPORT
-        # ==================================
+        # =============================================
+        # 14. DISPLAY AI REPORT
+        # =============================================
 
-        if st.session_state.get("report"):
+        if st.session_state.report:
 
-            st.markdown("---")
+            st.divider()
 
-            st.header("📑 DataSentinel AI Report")
+            st.header("📑 DataSentinel AI Analysis Report")
 
             st.markdown(
-                st.session_state["report"]
+                st.session_state.report
             )
 
             st.download_button(
-                "⬇️ Download Analysis Report",
-                data=st.session_state["report"],
+                label="⬇️ Download Analysis Report",
+                data=st.session_state.report,
                 file_name="DataSentinel_AI_Report.md",
                 mime="text/markdown",
                 use_container_width=True
             )
 
-# ==========================================
-# 13. FOOTER
-# ==========================================
 
-st.markdown("---")
+# =====================================================
+# 15. FOOTER
+# =====================================================
 
-st.markdown(
-    """
-    <div style="text-align:center; color:#64748B;">
-        🛡️ <b>DataSentinel AI</b><br>
-        Intelligent Dataset Quality & ML Readiness Auditor<br>
-        Powered by Multi-Agent AI
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+st.divider()
+
+st.markdown("""
+<div style="
+    text-align:center;
+    color:#475569;
+    padding:15px;
+    font-size:14px;
+">
+    🛡️ <b>DataSentinel AI</b><br>
+    Intelligent Dataset Quality & ML Readiness Auditor<br>
+    Powered by Multi-Agent Artificial Intelligence
+</div>
+""", unsafe_allow_html=True)
+```
